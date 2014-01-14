@@ -90,17 +90,17 @@ std::unordered_map<char, char> update_map(std::string &cipher, std::string &plai
 
 bool is_consistent(std::unordered_map<char, char> &map)
 {
-    std::unordered_set<char> counter;
+    std::unordered_map<char, char> counter;
 
     for (auto &i : map)
     {
-        counter.insert(i.second);
+        counter[i.second] = i.first;
     }
 
     return map.size() == counter.size();
 }
 
-void unscramble(std::vector<cstring> &cipher_words, int depth, std::unordered_map<char, char> map)
+void unscramble(std::vector<cstring> &cipher_words, unsigned depth, std::unordered_map<char, char> map)
 {
     if (depth >= cipher_words.size())
     {
