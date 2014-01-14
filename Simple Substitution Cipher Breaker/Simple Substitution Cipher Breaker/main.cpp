@@ -8,6 +8,7 @@
 #include <map>
 #include <fstream>
 #include <vector>
+#include <sstream>
 
 std::unordered_map<std::string, std::list<std::string>> dictionary;
 
@@ -146,20 +147,13 @@ int main()
 
 	// Preparing the ciphertext.
 
-	std::vector<cstring> cipher_words;
-
-	cipher_words.emplace_back("g");
-	cipher_words.emplace_back("kyi");
-	cipher_words.emplace_back("oaf");
-	cipher_words.emplace_back("ca");
-	cipher_words.emplace_back("wacrys");
-	cipher_words.emplace_back("sytytkys");
-	cipher_words.emplace_back("bah");
-	cipher_words.emplace_back("ia");
-	cipher_words.emplace_back("pylsoxi");
-	cipher_words.emplace_back("e");
-	cipher_words.emplace_back("nfknigifigac");
-	cipher_words.emplace_back("lgxbys");
+	std::string sentence = "g kyi oaf ca wacrys sytytkys bah ia pylsoxi e nfknigifigac lgxbys";
+	std::istringstream iss(sentence);
+	std::vector<cstring> cipher_words
+	{
+		std::istream_iterator<std::string> { iss },
+		std::istream_iterator<std::string> { }
+	};
 
 	// Preparing to prune.
 
