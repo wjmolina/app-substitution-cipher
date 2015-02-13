@@ -11,7 +11,6 @@
 #include <sstream>
 
 std::unordered_map<std::string, std::list<std::string>> dictionary;
-
 std::string normalize(std::string s)
 {
     auto C = 'A';
@@ -29,7 +28,6 @@ std::string normalize(std::string s)
 
     return s;
 }
-
 std::list<std::string> get_candidates(std::string &s)
 {
     return std::list<std::string>(dictionary[normalize(s)]);
@@ -62,7 +60,6 @@ std::set<char> intersect(std::set<char> &a, std::set<char> &b)
     std::set_intersection(a.begin(), a.end(), b.begin(), b.end(), std::inserter(c, c.begin()));
     return c;
 }
-
 std::string apply_map(std::string &cipher, std::string &plain, std::unordered_map<char, char> &map)
 {
     std::string result = "";
@@ -74,7 +71,6 @@ std::string apply_map(std::string &cipher, std::string &plain, std::unordered_ma
 
     return result;
 }
-
 std::unordered_map<char, char> update_map(std::string &cipher, std::string &plain, std::unordered_map<char, char> map)
 {
     for (unsigned i = 0; i < cipher.length(); i++)
@@ -87,7 +83,6 @@ std::unordered_map<char, char> update_map(std::string &cipher, std::string &plai
 
     return map;
 }
-
 bool is_consistent(std::unordered_map<char, char> &map)
 {
     std::unordered_map<char, char> counter;
@@ -99,7 +94,6 @@ bool is_consistent(std::unordered_map<char, char> &map)
 
     return map.size() == counter.size();
 }
-
 void unscramble(std::vector<cstring> &cipher_words, unsigned depth, std::unordered_map<char, char> map)
 {
     if (!is_consistent(map))
