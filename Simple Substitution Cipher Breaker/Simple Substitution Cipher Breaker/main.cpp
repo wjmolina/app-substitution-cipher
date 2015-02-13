@@ -102,6 +102,11 @@ bool is_consistent(std::unordered_map<char, char> &map)
 
 void unscramble(std::vector<cstring> &cipher_words, unsigned depth, std::unordered_map<char, char> map)
 {
+    if (!is_consistent(map))
+    {
+        return;
+    }
+
     if (depth >= cipher_words.size())
     {
         for (auto &i : cipher_words)
@@ -120,7 +125,7 @@ void unscramble(std::vector<cstring> &cipher_words, unsigned depth, std::unorder
     {
         for (auto &i : cipher_words[depth].candidates)
         {
-            if (apply_map(cipher_words[depth].word, i, map) == i && is_consistent(map))
+            if (apply_map(cipher_words[depth].word, i, map) == i)
             {
                 unscramble(cipher_words, depth + 1, update_map(cipher_words[depth].word, i, map));
             }
@@ -130,7 +135,7 @@ void unscramble(std::vector<cstring> &cipher_words, unsigned depth, std::unorder
 
 int main()
 {
-    // Initializing the dictionary.
+    std::cout << "Initializing dictionary..." << std::endl;
 
     std::ifstream file("EnglishDictionary.txt");
     std::string word;
@@ -145,9 +150,13 @@ int main()
 
     file.close();
 
-    // Preparing the ciphertext.
+    std::cout << "Enter ciphertext:" << std::endl << "> ";
 
-    std::string sentence = "g kyi oaf ca wacrys sytytkys bah ia pylsoxi e nfknigifigac lgxbys";
+    std::string sentence;
+
+    std::getline(std::cin, sentence);
+    std::cout << "Preparing..." << std::endl;
+
     std::istringstream iss(sentence);
     std::vector<cstring> cipher_words
     {
@@ -155,7 +164,7 @@ int main()
         std::istream_iterator<std::string> { }
     };
 
-    // Preparing to prune.
+    std::cout << "Pruning..." << std::endl;
 
     std::unordered_map<char, std::set<char>> pruner;
 
@@ -193,9 +202,11 @@ int main()
         }
     }
 
-    // Breaking the ciphertext.
+    std::cout << "Breaking..." << std::endl << std::endl;
 
     unscramble(cipher_words, 0, std::unordered_map<char, char>());
+
+    std::cout << std::endl << "The program has finished.";
 
     std::cin.get();
 
